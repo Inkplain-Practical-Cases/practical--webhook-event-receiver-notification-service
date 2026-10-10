@@ -1,0 +1,158 @@
+{
+  "crd_version": 1,
+  "name": "Webhook Event Receiver & Notification Service STEP-5",
+  "description": "Signed event verification and durable deduplication reference",
+  "source": {
+    "repo": "https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service",
+    "revision": "step-05-test-replay-and-failures",
+    "roots": {
+      "backend": "app"
+    },
+    "stacks": [
+      "python-fastapi",
+      "sqlite"
+    ]
+  },
+  "step": {
+    "no": 5,
+    "of": 5,
+    "title": "Test replay and failures",
+    "branch": "step-05-test-replay-and-failures",
+    "previous": "STEP-4.crd",
+    "removed": []
+  },
+  "flows": [
+    {
+      "id": "webhook",
+      "name": "Receive signed webhook",
+      "entry": "be.receive_webhook"
+    }
+  ],
+  "components": [
+    {
+      "id": "be.receive_webhook",
+      "name": "receive_webhook",
+      "kind": "function",
+      "side": "backend",
+      "layer": "door",
+      "description": "Read raw signed event, enforce payload limit, verify, validate timestamp and process once",
+      "source": {
+        "file": "app/main.py",
+        "symbol": "receive_webhook"
+      },
+      "step_change": "changed",
+      "operations": [
+        {
+          "id": "call-1",
+          "title": "Call verify_signature",
+          "calls": {
+            "to": "be.verify_signature",
+            "type": "call"
+          }
+        },
+        {
+          "id": "call-2",
+          "title": "Call parse_event",
+          "calls": {
+            "to": "be.parse_event",
+            "type": "call"
+          }
+        },
+        {
+          "id": "call-3",
+          "title": "Call check_timestamp",
+          "calls": {
+            "to": "be.check_timestamp",
+            "type": "call"
+          }
+        },
+        {
+          "id": "call-4",
+          "title": "Call record_once",
+          "calls": {
+            "to": "be.record_once",
+            "type": "call"
+          }
+        },
+        {
+          "id": "call-5",
+          "title": "Call notify",
+          "calls": {
+            "to": "be.notify",
+            "type": "call"
+          }
+        }
+      ]
+    },
+    {
+      "id": "be.verify_signature",
+      "name": "verify_signature",
+      "kind": "function",
+      "side": "backend",
+      "layer": "service",
+      "description": "Compare HMAC SHA-256 over exact request bytes to header in constant time",
+      "source": {
+        "file": "app/features/webhook.py",
+        "symbol": "verify_signature"
+      },
+      "step_change": "added",
+      "operations": []
+    },
+    {
+      "id": "be.parse_event",
+      "name": "parse_event",
+      "kind": "function",
+      "side": "backend",
+      "layer": "service",
+      "description": "Validate event id and type after JSON decoding",
+      "source": {
+        "file": "app/features/webhook.py",
+        "symbol": "parse_event"
+      },
+      "step_change": "added",
+      "operations": []
+    },
+    {
+      "id": "be.check_timestamp",
+      "name": "check_timestamp",
+      "kind": "function",
+      "side": "backend",
+      "layer": "service",
+      "description": "Reject events more than 300 seconds old or in future",
+      "source": {
+        "file": "app/features/webhook.py",
+        "symbol": "check_timestamp"
+      },
+      "step_change": "added",
+      "operations": []
+    },
+    {
+      "id": "be.record_once",
+      "name": "record_once",
+      "kind": "function",
+      "side": "backend",
+      "layer": "provider",
+      "description": "Atomically register event ID in an SQLite table with uniqueness constraint",
+      "source": {
+        "file": "app/features/webhook.py",
+        "symbol": "record_once"
+      },
+      "step_change": "added",
+      "operations": []
+    },
+    {
+      "id": "be.notify",
+      "name": "notify",
+      "kind": "function",
+      "side": "backend",
+      "layer": "provider",
+      "description": "Emit a synthetic notification receipt without contacting a vendor",
+      "source": {
+        "file": "app/features/webhook.py",
+        "symbol": "notify"
+      },
+      "step_change": "added",
+      "operations": []
+    }
+  ]
+}

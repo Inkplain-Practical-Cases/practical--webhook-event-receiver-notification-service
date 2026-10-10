@@ -1,5 +1,8 @@
 name: Python tests
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [main, 'step-**']
+  workflow_dispatch:
 jobs:
   pytest:
     runs-on: ubuntu-latest
