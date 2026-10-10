@@ -1,15 +1,9 @@
-# webhook-event-receiver-notification-service
+# Webhook Event Receiver & Notification Service
 
-Inkplain FDE Starter learning repository. Five STEP branches introduce capabilities in sequence. Each STEP-N branch includes its own CRD, teaching notes and synthetic source. The final main branch contains the STEP-5 implementation.
+Starter offline reference for verified signed callbacks with bounded payloads, 5-minute replay window, atomic SQLite-backed event deduplication, mock notifications and regression tests.
 
-## Local run
+Install with `pip install -r requirements.txt`; set `WEBHOOK_SECRET` (never commit a production secret); execute `pytest -q`; start `uvicorn app.main:app --reload`.
 
-```bash
-pip install -r requirements.txt
-pytest -q
-uvicorn app.main:app --reload
-```
+POST `/webhooks` with original JSON body and `X-Webhook-Signature: sha256=<HMAC>` calculated from it. Duplicate event IDs receive status `duplicate`.
 
-**Caution:** This is a mock training implementation, not a production-grade integration. Real security controls, data storage and external provider implementations need further engineering and QA.
-
-The canonical complete design is FINAL.crd. Simulator export and portal lessons are tracked separately in the Inkplain Case Flow.
+**Limitation:** notification delivery is intentionally mocked. For production, implement a transactional outbox and real provider adapter, rate limiting, HTTPS, operational alerting and tenant partitioning. SQLite local storage assumes one shared filesystem.

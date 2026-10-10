@@ -1,22 +1,27 @@
-"""Typed HTTP door delegating to synthetic learning service functions."""
-from fastapi import FastAPI,HTTPException
-from pydantic import BaseModel,Field
-from app.features.step_2 import transform as action_2
-from app.features.step_3 import transform as action_3
-from app.features.step_4 import transform as action_4
-from app.features.step_5 import transform as action_5
-app=FastAPI(title="webhook-event-receiver-notification-service")
-class Request(BaseModel):
-    message:str=Field(min_length=1,max_length=2000)
-@app.post("/process")
-def process(request:Request)->dict[str,str]:
-    """Apply source-defined transformations in an ordered sequence."""
+"""HTTP door for signed SaaS webhook events.
+ICS layer: door.
+Why it exists: validates raw request signatures before changing delivery state.
+Without it: unauthenticated callbacks could reach business processing.
+"""
+import json
+from fastapi import FastAPI, Header, HTTPException, Request
+from app.features.webhook import verify_signature, parse_event, check_timestamp, record_once, notify
+app = FastAPI(title="Webhook Event Receiver & Notification Service")
+
+@app.post("/webhooks")
+async def receive_webhook(request: Request, x_webhook_signature: str = Header(default="")) -> dict:
+    """Authenticate raw bytes, validate event identity and prevent duplicate side effects."""
+    body = await request.body()
+    if len(body) > 65536:
+        raise HTTPException(status_code=413, detail="event too large")
+    if not verify_signature(body, x_webhook_signature):
+        raise HTTPException(status_code=401, detail="invalid signature")
     try:
-        value=request.message
-        value=action_2(value)
-        value=action_3(value)
-        value=action_4(value)
-        value=action_5(value)
-        return {"status":"accepted","result":value}
-    except ValueError as exc:
-        raise HTTPException(status_code=422,detail=str(exc)) from exc
+        event = parse_event(body)
+    except (ValueError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=422, detail="invalid event") from exc
+    if not check_timestamp(event):
+        raise HTTPException(status_code=401, detail="stale event")
+    if not record_once(event["id"]):
+        return {"status": "duplicate", "event_id": event["id"]}
+    return {"status": "accepted", "notification": notify(event)}
