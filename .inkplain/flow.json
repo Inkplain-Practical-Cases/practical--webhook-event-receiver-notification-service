@@ -1,0 +1,90 @@
+{
+  "practical_case": {
+    "id": "CFe9Dzk9hMgpO5aqxeX9",
+    "slug": "webhook-event-receiver-notification-service",
+    "name": "Webhook Event Receiver & Notification Service"
+  },
+  "current": "done",
+  "stages": {
+    "intro": {
+      "status": "done",
+      "summary": "FDE Starter case with five matched Starter profile skills (30% targets), seven substantive introduction sections and a five-step testable implementation plan saved and verified.",
+      "outputs": {
+        "profile": "forward-deployed-engineering",
+        "level": "starter",
+        "skills_linked": 5,
+        "intro_sections": 7,
+        "planned_steps": 5,
+        "portal_url": "/practical-case/webhook-event-receiver-notification-service"
+      },
+      "started_at": "2026-10-10T14:32:13.266Z",
+      "finished_at": "2026-10-10T14:32:13.266Z",
+      "updated_by": "api-key:for-chatgpt-test-2"
+    },
+    "repo": {
+      "status": "done",
+      "summary": "Repaired cumulative Git ancestry using MCP tool with backups; second repair check confirms zero problems. Added pytest and GitHub Actions to STEP-1 through STEP-4; latest CI confirms 6/6 success across all five STEP branches and main. Main contains real signed webhook replay/duplicate tests; STEP-1–4 remain progressively simplified teaching fixtures.",
+      "outputs": {
+        "repo_url": "https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service",
+        "planned_steps": 5,
+        "branch_refs_created": 5,
+        "steps_implemented": 1,
+        "steps_verified": 0,
+        "history_cumulative": true,
+        "ci_verified": false,
+        "steps_with_committed_source": 5,
+        "main_final": true,
+        "source_quality": "starter mock demonstrator; full domain acceptance pending",
+        "final_main_ci_success": true,
+        "step5_ci_success": true,
+        "all_steps_ci_verified": false,
+        "blocker": "GitHub create_branch/update_ref permission HTTP 403; require writable Git refs through MCP or authorized CLI",
+        "connector_retested": "2026-10-10",
+        "backup_ref_create": "HTTP 403",
+        "ref_update": "GraphQL FORBIDDEN",
+        "requires": "GitHub connector Git refs write authorization, or grant Inkplain MCP a dedicated reparent backup/restore operation",
+        "steps": 5,
+        "history_problems": 0,
+        "ci_success": 6,
+        "ci_total": 6,
+        "final_main": true,
+        "teaching_fixture_limitation": true
+      },
+      "started_at": "2026-10-10T14:35:56.965Z",
+      "finished_at": "2026-10-10T16:39:21.514Z",
+      "updated_by": "api-key:for-chatgpt-test-2"
+    },
+    "inkp": {
+      "status": "done",
+      "summary": "Five-tab .inkp created on final main, each STEP tab linked to its source-derived executor component docs; get_inkp_summary confirms exactly STEP-1..STEP-5 and zero missing linked executor documents. Repo stage remains in progress separately for ancestry/CI.",
+      "outputs": {
+        "inkp_path": "webhook-event-receiver-notification-service.inkp",
+        "inkp_url": "https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service/blob/main/webhook-event-receiver-notification-service.inkp",
+        "tabs": 5,
+        "missing_links": 0
+      },
+      "started_at": "2026-10-10T15:05:17.833Z",
+      "finished_at": "2026-10-10T15:05:17.833Z",
+      "updated_by": "api-key:for-chatgpt-test-2"
+    },
+    "content": {
+      "status": "done",
+      "summary": "All seven portal categories and 30 lessons saved and read back. STEP-5 design, per-component 4M, source walkthrough and test instructions rewritten against current signed-webhook code; Overview, project structure and Conclusion synchronized. Simulator tabs and linked documents verified. Earlier STEP lessons continue to describe their own teaching snapshots; separate full editorial review may improve depth.",
+      "outputs": {
+        "categories": 7,
+        "items": 30,
+        "overview": 7,
+        "step_items": 20,
+        "conclusion": 3,
+        "step5_source_reconciled": true,
+        "simulator_tabs": 5,
+        "missing_simulator_links": 0,
+        "portal_url": "/practical-case/webhook-event-receiver-notification-service"
+      },
+      "started_at": "2026-10-10T15:51:28.833Z",
+      "finished_at": "2026-10-10T15:51:28.833Z",
+      "updated_by": "api-key:for-chatgpt-test-2"
+    }
+  },
+  "updated_at": "2026-10-10T16:39:21.514Z"
+}
