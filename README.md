@@ -1,18 +1,15 @@
-# Webhook Event Receiver & Notification Service
+# webhook-event-receiver-notification-service
 
-A signed webhook intake validates authenticity, schema and duplicate IDs before notifying a mock downstream system, with failure tests.
+Inkplain FDE Starter learning repository. Five STEP branches introduce capabilities in sequence. Each STEP-N branch includes its own CRD, teaching notes and synthetic source. The final main branch contains the STEP-5 implementation.
 
-An Inkplain practical case: a real project built step by step.
-
-## How this repository works
-
-Every step of the lesson has its own branch, and each one contains all steps up to it:
+## Local run
 
 ```bash
-git clone https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service.git
-cd practical--webhook-event-receiver-notification-service
-git branch -r            # list the step branches
-git checkout step-01-…   # code after step 1
+pip install -r requirements.txt
+pytest -q
+uvicorn app.main:app --reload
 ```
 
-`main` holds the final, complete version.
+**Caution:** This is a mock training implementation, not a production-grade integration. Real security controls, data storage and external provider implementations need further engineering and QA.
+
+The canonical complete design is FINAL.crd. Simulator export and portal lessons are tracked separately in the Inkplain Case Flow.
