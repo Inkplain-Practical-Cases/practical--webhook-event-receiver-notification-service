@@ -1,18 +1,9 @@
 # Webhook Event Receiver & Notification Service
 
-A signed webhook intake validates authenticity, schema and duplicate IDs before notifying a mock downstream system, with failure tests.
+Starter offline reference for verified signed callbacks with bounded payloads, 5-minute replay window, atomic SQLite-backed event deduplication, mock notifications and regression tests.
 
-An Inkplain practical case: a real project built step by step.
+Install with `pip install -r requirements.txt`; set `WEBHOOK_SECRET` (never commit a production secret); execute `pytest -q`; start `uvicorn app.main:app --reload`.
 
-## How this repository works
+POST `/webhooks` with original JSON body and `X-Webhook-Signature: sha256=<HMAC>` calculated from it. Duplicate event IDs receive status `duplicate`.
 
-Every step of the lesson has its own branch, and each one contains all steps up to it:
-
-```bash
-git clone https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service.git
-cd practical--webhook-event-receiver-notification-service
-git branch -r            # list the step branches
-git checkout step-01-…   # code after step 1
-```
-
-`main` holds the final, complete version.
+**Limitation:** notification delivery is intentionally mocked. For production, implement a transactional outbox and real provider adapter, rate limiting, HTTPS, operational alerting and tenant partitioning. SQLite local storage assumes one shared filesystem.
