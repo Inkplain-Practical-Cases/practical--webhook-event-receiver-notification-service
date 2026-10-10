@@ -1,10 +1,10 @@
 {
   "crd_version": 1,
-  "name": "Webhook Event Receiver & Notification Service STEP-5",
+  "name": "Webhook Event Receiver & Notification Service FINAL",
   "description": "Signed event verification and durable deduplication reference",
   "source": {
     "repo": "https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service",
-    "revision": "step-05-test-replay-and-failures",
+    "revision": "main",
     "roots": {
       "backend": "app"
     },
@@ -14,11 +14,11 @@
     ]
   },
   "step": {
-    "no": 5,
+    "no": "final",
     "of": 5,
-    "title": "Test replay and failures",
-    "branch": "step-05-test-replay-and-failures",
-    "previous": "STEP-4.crd",
+    "title": "Final signed webhook",
+    "branch": "main",
+    "previous": "STEP-5.crd",
     "removed": []
   },
   "flows": [
@@ -40,7 +40,7 @@
         "file": "app/main.py",
         "symbol": "receive_webhook"
       },
-      "step_change": "changed",
+      "step_change": "unchanged",
       "operations": [
         {
           "id": "call-1",
@@ -95,7 +95,7 @@
         "file": "app/features/webhook.py",
         "symbol": "verify_signature"
       },
-      "step_change": "added",
+      "step_change": "unchanged",
       "operations": []
     },
     {
@@ -109,7 +109,7 @@
         "file": "app/features/webhook.py",
         "symbol": "parse_event"
       },
-      "step_change": "added",
+      "step_change": "unchanged",
       "operations": []
     },
     {
@@ -123,7 +123,7 @@
         "file": "app/features/webhook.py",
         "symbol": "check_timestamp"
       },
-      "step_change": "added",
+      "step_change": "unchanged",
       "operations": []
     },
     {
@@ -137,7 +137,7 @@
         "file": "app/features/webhook.py",
         "symbol": "record_once"
       },
-      "step_change": "added",
+      "step_change": "unchanged",
       "operations": []
     },
     {
@@ -151,7 +151,7 @@
         "file": "app/features/webhook.py",
         "symbol": "notify"
       },
-      "step_change": "added",
+      "step_change": "unchanged",
       "operations": []
     }
   ]
