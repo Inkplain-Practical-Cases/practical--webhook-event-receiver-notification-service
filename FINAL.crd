@@ -1,7 +1,7 @@
 {
   "crd_version": 1,
-  "name": "webhook-event-receiver-notification-service — FINAL",
-  "description": "Test replay and failures",
+  "name": "Webhook Event Receiver & Notification Service FINAL",
+  "description": "Signed event verification and durable deduplication reference",
   "source": {
     "repo": "https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service",
     "revision": "main",
@@ -9,121 +9,149 @@
       "backend": "app"
     },
     "stacks": [
-      "python-fastapi"
+      "python-fastapi",
+      "sqlite"
     ]
   },
   "step": {
     "no": "final",
     "of": 5,
-    "title": "Final synthetic teaching implementation",
+    "title": "Final signed webhook",
     "branch": "main",
     "previous": "STEP-5.crd",
     "removed": []
   },
   "flows": [
     {
-      "id": "request",
-      "name": "Synthetic request",
-      "entry": "be.process"
+      "id": "webhook",
+      "name": "Receive signed webhook",
+      "entry": "be.receive_webhook"
     }
   ],
   "components": [
     {
-      "id": "be.process",
-      "name": "process",
+      "id": "be.receive_webhook",
+      "name": "receive_webhook",
       "kind": "function",
       "side": "backend",
       "layer": "door",
-      "step_change": "unchanged",
+      "description": "Read raw signed event, enforce payload limit, verify, validate timestamp and process once",
       "source": {
         "file": "app/main.py",
-        "symbol": "process"
+        "symbol": "receive_webhook"
       },
+      "step_change": "unchanged",
       "operations": [
         {
-          "id": "op-2",
-          "title": "Invoke step 2",
+          "id": "call-1",
+          "title": "Call verify_signature",
           "calls": {
-            "to": "be.step_2",
+            "to": "be.verify_signature",
             "type": "call"
           }
         },
         {
-          "id": "op-3",
-          "title": "Invoke step 3",
+          "id": "call-2",
+          "title": "Call parse_event",
           "calls": {
-            "to": "be.step_3",
+            "to": "be.parse_event",
             "type": "call"
           }
         },
         {
-          "id": "op-4",
-          "title": "Invoke step 4",
+          "id": "call-3",
+          "title": "Call check_timestamp",
           "calls": {
-            "to": "be.step_4",
+            "to": "be.check_timestamp",
             "type": "call"
           }
         },
         {
-          "id": "op-5",
-          "title": "Invoke step 5",
+          "id": "call-4",
+          "title": "Call record_once",
           "calls": {
-            "to": "be.step_5",
+            "to": "be.record_once",
+            "type": "call"
+          }
+        },
+        {
+          "id": "call-5",
+          "title": "Call notify",
+          "calls": {
+            "to": "be.notify",
             "type": "call"
           }
         }
       ]
     },
     {
-      "id": "be.step_2",
-      "name": "transform_2",
+      "id": "be.verify_signature",
+      "name": "verify_signature",
       "kind": "function",
       "side": "backend",
       "layer": "service",
-      "step_change": "unchanged",
+      "description": "Compare HMAC SHA-256 over exact request bytes to header in constant time",
       "source": {
-        "file": "app/features/step_2.py",
-        "symbol": "transform"
+        "file": "app/features/webhook.py",
+        "symbol": "verify_signature"
       },
+      "step_change": "unchanged",
       "operations": []
     },
     {
-      "id": "be.step_3",
-      "name": "transform_3",
+      "id": "be.parse_event",
+      "name": "parse_event",
       "kind": "function",
       "side": "backend",
       "layer": "service",
-      "step_change": "unchanged",
+      "description": "Validate event id and type after JSON decoding",
       "source": {
-        "file": "app/features/step_3.py",
-        "symbol": "transform"
+        "file": "app/features/webhook.py",
+        "symbol": "parse_event"
       },
+      "step_change": "unchanged",
       "operations": []
     },
     {
-      "id": "be.step_4",
-      "name": "transform_4",
+      "id": "be.check_timestamp",
+      "name": "check_timestamp",
       "kind": "function",
       "side": "backend",
       "layer": "service",
-      "step_change": "unchanged",
+      "description": "Reject events more than 300 seconds old or in future",
       "source": {
-        "file": "app/features/step_4.py",
-        "symbol": "transform"
+        "file": "app/features/webhook.py",
+        "symbol": "check_timestamp"
       },
+      "step_change": "unchanged",
       "operations": []
     },
     {
-      "id": "be.step_5",
-      "name": "transform_5",
+      "id": "be.record_once",
+      "name": "record_once",
       "kind": "function",
       "side": "backend",
-      "layer": "service",
-      "step_change": "unchanged",
+      "layer": "provider",
+      "description": "Atomically register event ID in an SQLite table with uniqueness constraint",
       "source": {
-        "file": "app/features/step_5.py",
-        "symbol": "transform"
+        "file": "app/features/webhook.py",
+        "symbol": "record_once"
       },
+      "step_change": "unchanged",
+      "operations": []
+    },
+    {
+      "id": "be.notify",
+      "name": "notify",
+      "kind": "function",
+      "side": "backend",
+      "layer": "provider",
+      "description": "Emit a synthetic notification receipt without contacting a vendor",
+      "source": {
+        "file": "app/features/webhook.py",
+        "symbol": "notify"
+      },
+      "step_change": "unchanged",
       "operations": []
     }
   ]
