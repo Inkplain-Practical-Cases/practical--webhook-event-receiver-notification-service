@@ -10,3 +10,6 @@ def test_rejects_empty_request():
 def test_step_signature_fixture():
     from app.features.step_2 import transform
     assert len(transform('case.created')) == 64
+def test_step_dedupe_fixture():
+    from app.features.step_3 import transform
+    assert len(transform('a'*64)) == 16
