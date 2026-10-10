@@ -13,3 +13,6 @@ def test_step_signature_fixture():
 def test_step_dedupe_fixture():
     from app.features.step_3 import transform
     assert len(transform('a'*64)) == 16
+def test_step_notification_fixture():
+    from app.features.step_4 import transform
+    assert transform('abc') == 'mock_notification:abc'
