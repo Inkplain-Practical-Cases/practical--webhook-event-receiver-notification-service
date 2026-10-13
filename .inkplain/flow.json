@@ -74,7 +74,7 @@
     },
     "content": {
       "status": "done",
-      "summary": "All seven portal categories and 30 lessons saved and read back. STEP-5 design, per-component 4M, source walkthrough and test instructions rewritten against current signed-webhook code; Overview, project structure and Conclusion synchronized. Simulator tabs and linked documents verified. Earlier STEP lessons continue to describe their own teaching snapshots; separate full editorial review may improve depth.",
+      "summary": "Created STEP-5 Database (Entity) Relations as sidebar item 2 with matching ERD visualization and source links.",
       "outputs": {
         "categories": 7,
         "items": 30,
@@ -84,12 +84,18 @@
         "step5_source_reconciled": true,
         "simulator_tabs": 5,
         "missing_simulator_links": 0,
-        "portal_url": "/practical-case/webhook-event-receiver-notification-service"
+        "portal_url": "/practical-case/webhook-event-receiver-notification-service",
+        "erd_lessons_created": 1,
+        "erd_visualizations": [
+          "STEP-5-ERD"
+        ],
+        "erd_item_title": "Database (Entity) Relations",
+        "content_verified": true
       },
       "started_at": "2026-10-10T15:51:28.833Z",
       "finished_at": "2026-10-10T15:51:28.833Z",
       "updated_by": "api-key:for-chatgpt-test-2"
     }
   },
-  "updated_at": "2026-10-13T11:42:01.803Z"
+  "updated_at": "2026-10-13T11:42:06.619Z"
 }
