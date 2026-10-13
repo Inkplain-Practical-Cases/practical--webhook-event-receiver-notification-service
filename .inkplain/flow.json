@@ -56,12 +56,17 @@
     },
     "inkp": {
       "status": "done",
-      "summary": "Five-tab .inkp created on final main, each STEP tab linked to its source-derived executor component docs; get_inkp_summary confirms exactly STEP-1..STEP-5 and zero missing linked executor documents. Repo stage remains in progress separately for ancestry/CI.",
+      "summary": "Source-derived SQLite delivered replay-protection entity tab added for STEP-5; 5 flow tabs unchanged.",
       "outputs": {
         "inkp_path": "webhook-event-receiver-notification-service.inkp",
         "inkp_url": "https://github.com/Inkplain-Practical-Cases/practical--webhook-event-receiver-notification-service/blob/main/webhook-event-receiver-notification-service.inkp",
-        "tabs": 5,
-        "missing_links": 0
+        "tabs": 6,
+        "missing_links": 0,
+        "erd_tabs": [
+          "STEP-5-ERD"
+        ],
+        "erd_entities": 1,
+        "erd_relations": 0
       },
       "started_at": "2026-10-10T15:05:17.833Z",
       "finished_at": "2026-10-10T15:05:17.833Z",
@@ -86,5 +91,5 @@
       "updated_by": "api-key:for-chatgpt-test-2"
     }
   },
-  "updated_at": "2026-10-10T16:39:21.514Z"
+  "updated_at": "2026-10-13T11:42:01.803Z"
 }
