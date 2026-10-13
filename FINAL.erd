@@ -1,0 +1,28 @@
+{
+  "erd_version": 1,
+  "name": "webhook-event-receiver-notification-service",
+  "step": "final",
+  "engine": "sqlite",
+  "generated_from": [
+    "app/features/webhook.py",
+    "app/main.py"
+  ],
+  "entities": [
+    {
+      "name": "delivered",
+      "kind": "table",
+      "step_change": "unchanged",
+      "description": "Durable deduplication set of webhook event IDs; each ID is recorded at most once to reject repeated signed deliveries.",
+      "source": "app/features/webhook.py:record_once / CREATE TABLE IF NOT EXISTS delivered",
+      "fields": [
+        {
+          "name": "event_id",
+          "type": "TEXT",
+          "key": "PK",
+          "description": "Unique ID from validated signed webhook used for atomic INSERT OR IGNORE."
+        }
+      ]
+    }
+  ],
+  "relations": []
+}
